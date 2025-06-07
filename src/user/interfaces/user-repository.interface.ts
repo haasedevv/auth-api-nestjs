@@ -1,4 +1,4 @@
-import { IBaseRepository } from '@/common/generics/repositories/base-repository/interfaces/base-repository.interface';
+import { IBaseRepository } from '@/common/interfaces/base-repository.interface';
 import { InferIdType } from '@/common/types/object-with-id.type';
 import { User } from '@/user/entities/user.entity';
 
