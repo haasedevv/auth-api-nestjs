@@ -1,5 +1,5 @@
-import { ExceptionResponseType } from '@common/exception-filters/http-exception/types/exception-response.type';
-import { ResponseType } from '@common/types/response.type';
+import { ExceptionResponseType } from '@/common/exception-filters/http-exception/types/exception-response.type';
+import { ResponseType } from '@/common/types/response.type';
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
 import { Response } from 'express';
 

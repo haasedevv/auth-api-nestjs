@@ -1,4 +1,4 @@
-import { ExceptionResponseType } from '@common/exceptions/custom/types/exception-response.type';
+import { ExceptionResponseType } from '@/common/exceptions/custom/types/exception-response.type';
 import { HttpStatus, HttpException as NestHttpException } from '@nestjs/common';
 import { getReasonPhrase } from 'http-status-codes';
 

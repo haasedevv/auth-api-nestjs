@@ -1,4 +1,4 @@
-import { InferIdType } from '@common/types/object-with-id.type';
+import { InferIdType } from '@/common/types/object-with-id.type';
 import { Document, IfAny, Require_id } from 'mongoose';
 
 export class MongoDocumentUtil {

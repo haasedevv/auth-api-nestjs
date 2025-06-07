@@ -1,7 +1,7 @@
 import { IBaseRepository } from '@/common/interfaces/base-repository.interface';
 import { FindAllOptions } from '@/common/repositories/base-repository/types/find-all-options.type';
-import { InferIdType } from '@common/types/object-with-id.type';
-import { MongoDocumentUtil } from '@common/utils/mongo-document.util';
+import { InferIdType } from '@/common/types/object-with-id.type';
+import { MongoDocumentUtil } from '@/common/utils/mongo-document.util';
 import { Model } from 'mongoose';
 
 export class BaseRepository<T> implements IBaseRepository<T> {

@@ -1,5 +1,5 @@
 import { FindAllOptions } from '@/common/repositories/base-repository/types/find-all-options.type';
-import { InferIdType } from '@common/types/object-with-id.type';
+import { InferIdType } from '@/common/types/object-with-id.type';
 
 export interface IBaseRepository<T> {
   create(data: Partial<T>, select?: (keyof T)[]): Promise<InferIdType<T, string> | null>;
