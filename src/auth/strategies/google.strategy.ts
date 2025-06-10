@@ -1,6 +1,7 @@
 import { AuthService } from '@/auth/auth.service';
 import googleOauthConfig from '@/auth/configs/google-oauth.config';
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException } from '@/common/exceptions/custom/custom.exception';
+import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Profile, Strategy, VerifyCallback } from 'passport-google-oauth20';
@@ -23,10 +24,15 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: Profile,
     done: VerifyCallback,
   ) {
-    const user = await this.authService.validateGoogleUser({
+    const validateGoogleUserPayload = {
       email: profile.emails?.[0]?.value || '',
       name: profile.displayName || '',
-    });
+    };
+
+    if (!validateGoogleUserPayload.email || !validateGoogleUserPayload.name)
+      throw new HttpException(null, HttpStatus.BAD_REQUEST, 'Email not provided by Google');
+
+    const user = await this.authService.validateGoogleUser(validateGoogleUserPayload);
 
     done(null, user);
   }
