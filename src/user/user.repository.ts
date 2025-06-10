@@ -1,3 +1,4 @@
+import { UserProvider } from '@/common/enums/user-provider.enum';
 import { BaseRepository } from '@/common/repositories/base-repository/base-repository.repository';
 import { InferIdType } from '@/common/types/object-with-id.type';
 import { MongoDocumentUtil } from '@/common/utils/mongo-document.util';
@@ -13,6 +14,15 @@ export class UserRepository extends BaseRepository<User> implements IUserReposit
 
   async findByEmail(email: string): Promise<InferIdType<User, string> | null> {
     const user = await this.userBaseRepository.findOne({ email }).exec();
+
+    return MongoDocumentUtil.transformDocumentToObjectWithId<User>(user);
+  }
+
+  async findByEmailAndProvider(
+    email: string,
+    provider: UserProvider,
+  ): Promise<InferIdType<User, string> | null> {
+    const user = await this.userBaseRepository.findOne({ email, providers: provider }).exec();
 
     return MongoDocumentUtil.transformDocumentToObjectWithId<User>(user);
   }
