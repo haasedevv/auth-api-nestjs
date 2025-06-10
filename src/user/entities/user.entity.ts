@@ -5,7 +5,7 @@ export class User {
     public name: string,
     public email: string,
     public password: string,
-    public provider: UserProvider,
+    public providers: UserProvider[],
     public createdAt: Date | null = new Date(),
     public updatedAt: Date | null,
   ) {}
