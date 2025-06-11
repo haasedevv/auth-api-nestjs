@@ -4,9 +4,9 @@ export class User {
   constructor(
     public name: string,
     public email: string,
-    public password: string,
     public providers: UserProvider[],
     public createdAt: Date | null = new Date(),
     public updatedAt: Date | null,
+    public password?: string | null,
   ) {}
 }
