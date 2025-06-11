@@ -79,6 +79,8 @@ export class UserService implements IUserService {
       });
     }
 
+    if (!user) throw new BadRequestException('User creation failed');
+
     return user;
   }
 
