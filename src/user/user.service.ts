@@ -5,7 +5,7 @@ import { DtoUtil } from '@/common/utils/dto.util';
 import { CreateUserRequestDto } from '@/user/dto/request/create-user-request.dto';
 import { AddProviderToUserPayloadDto } from '@/user/dto/service/payload/add-provider-to-user-payload.dto';
 import { CreateUserPayloadDto } from '@/user/dto/service/payload/create-user-payload.dto';
-import { FindExternalProviderUserPayloadDto } from '@/user/dto/service/payload/find-extermal-provider-user-payload.dto';
+import { findUserByEmailAndProviderPayloadDto } from '@/user/dto/service/payload/find-extermal-provider-user-payload.dto';
 import { User } from '@/user/entities/user.entity';
 import { IUserService } from '@/user/interfaces/user-service.interface';
 import { UserRepository } from '@/user/user.repository';
@@ -56,10 +56,10 @@ export class UserService implements IUserService {
     return createResult;
   }
 
-  async findExternalProviderUser(
-    payload: FindExternalProviderUserPayloadDto,
+  async findUserByEmailAndProvider(
+    payload: findUserByEmailAndProviderPayloadDto,
   ): Promise<InferIdType<User, string>> {
-    await DtoUtil.validateDto(FindExternalProviderUserPayloadDto, payload);
+    await DtoUtil.validateDto(findUserByEmailAndProviderPayloadDto, payload);
 
     let user: InferIdType<User, string> | null = null;
     user = await this.userRepository.findByEmail(payload.email);

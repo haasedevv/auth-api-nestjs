@@ -34,7 +34,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     if (!validateGoogleUserPayload.email || !validateGoogleUserPayload.name)
       throw new HttpException(null, HttpStatus.BAD_REQUEST, 'Email not provided by Google');
 
-    const user = await this.userService.findExternalProviderUser(validateGoogleUserPayload);
+    const user = await this.userService.findUserByEmailAndProvider(validateGoogleUserPayload);
 
     done(null, user);
   }
