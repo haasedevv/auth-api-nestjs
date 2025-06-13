@@ -1,21 +1,21 @@
-import googleOauthConfig from '@/auth/configs/google-oauth.config';
+import githubOauthConfig from '@/auth/configs/github-oauth.config';
 import { UserProvider } from '@/common/enums/user-provider.enum';
-import { HttpException } from '@/common/exceptions/custom/custom.exception';
 import { UserService } from '@/user/user.service';
-import { HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Profile, Strategy, VerifyCallback } from 'passport-google-oauth20';
+import { Profile, Strategy } from 'passport-github2';
+import { VerifyCallback } from 'passport-google-oauth20';
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
+export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
   constructor(
-    @Inject(googleOauthConfig.KEY)
-    private readonly googleConfiguration: ConfigType<typeof googleOauthConfig>,
+    @Inject(githubOauthConfig.KEY)
+    private readonly githubConfiguration: ConfigType<typeof githubOauthConfig>,
     private readonly userService: UserService,
   ) {
     super({
-      ...googleConfiguration,
+      ...githubConfiguration,
     });
   }
 
@@ -28,11 +28,11 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     const validateGoogleUserPayload = {
       email: profile.emails?.[0]?.value || '',
       name: profile.displayName || '',
-      provider: UserProvider.GOOGLE,
+      provider: UserProvider.GITHUB,
     };
 
     if (!validateGoogleUserPayload.email || !validateGoogleUserPayload.name)
-      throw new HttpException(null, HttpStatus.BAD_REQUEST, 'Email not provided by Google');
+      throw new BadRequestException('Email not provided by Google');
 
     const user =
       await this.userService.findUserByEmailAndExternalProvider(validateGoogleUserPayload);
