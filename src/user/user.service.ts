@@ -2,10 +2,9 @@ import { UserProvider } from '@/common/enums/user-provider.enum';
 import { PasswordService } from '@/common/services/password/password.service';
 import { InferIdType } from '@/common/types/object-with-id.type';
 import { DtoUtil } from '@/common/utils/dto.util';
-import { CreateUserRequestDto } from '@/user/dto/request/create-user-request.dto';
 import { AddProviderToUserPayloadDto } from '@/user/dto/service/payload/add-provider-to-user-payload.dto';
 import { CreateUserPayloadDto } from '@/user/dto/service/payload/create-user-payload.dto';
-import { findUserByEmailAndProviderPayloadDto } from '@/user/dto/service/payload/find-extermal-provider-user-payload.dto';
+import { findUserByEmailAndExternalProviderPayloadDto } from '@/user/dto/service/payload/find-user-by-email-and-external-provider-payload.dto';
 import { User } from '@/user/entities/user.entity';
 import { IUserService } from '@/user/interfaces/user-service.interface';
 import { UserRepository } from '@/user/user.repository';
@@ -16,7 +15,7 @@ export class UserService implements IUserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async createUser(payload: CreateUserPayloadDto): Promise<InferIdType<User, string>> {
-    await DtoUtil.validateDto(CreateUserRequestDto, payload);
+    await DtoUtil.validateDto(CreateUserPayloadDto, payload);
 
     const user = await this.userRepository.findByEmail(payload.email);
 
@@ -56,10 +55,10 @@ export class UserService implements IUserService {
     return createResult;
   }
 
-  async findUserByEmailAndProvider(
-    payload: findUserByEmailAndProviderPayloadDto,
+  async findUserByEmailAndExternalProvider(
+    payload: findUserByEmailAndExternalProviderPayloadDto,
   ): Promise<InferIdType<User, string>> {
-    await DtoUtil.validateDto(findUserByEmailAndProviderPayloadDto, payload);
+    await DtoUtil.validateDto(findUserByEmailAndExternalProviderPayloadDto, payload);
 
     let user: InferIdType<User, string> | null = null;
     user = await this.userRepository.findByEmail(payload.email);
@@ -69,6 +68,7 @@ export class UserService implements IUserService {
         name: payload.name,
         email: payload.email,
         provider: payload.provider,
+        skipPasswordHashing: true,
       });
     }
 
