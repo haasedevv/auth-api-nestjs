@@ -28,7 +28,12 @@ export class UserController implements IUserController {
       statusCode: HttpStatus.CREATED,
       message: 'User created successfully',
       success: true,
-      data: createUserResult,
+      data: {
+        user: {
+          name: createUserResult.name,
+          email: createUserResult.email,
+        },
+      },
     };
   }
 }
