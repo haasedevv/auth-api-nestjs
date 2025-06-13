@@ -9,7 +9,7 @@ export class MongoDocumentUtil {
 
     const docObject = doc.toObject({ versionKey: false }) as Require_id<T>;
 
-    const id = docObject._id;
+    const id = docObject._id?.toString?.() ?? '';
 
     delete docObject._id;
     return { ...docObject, id: id } as InferIdType<T, string>;
