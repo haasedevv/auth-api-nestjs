@@ -1,4 +1,4 @@
-export type SignInReturnType = {
+export type RefreshTokenReturnType = {
   refreshToken: string;
   accessToken: string;
   user: {
